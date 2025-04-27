@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import { authRoutes } from "./routes/authRoutes.js";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
 
@@ -16,5 +18,10 @@ app.use(
 app.get("/health-check", (req, res) => {
   res.send("API is running");
 });
+
+app.use("/api/auth", authRoutes);
+
+app.use(notFound);
+app.use(errorHandler);
 
 export default app;
