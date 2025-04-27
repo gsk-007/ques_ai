@@ -4,6 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "db:seed": "node backend/seeds/user.js",
     "server": "nodemon backend/index.js"
   },
   "keywords": [],
