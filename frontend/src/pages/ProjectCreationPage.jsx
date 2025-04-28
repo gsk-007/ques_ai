@@ -10,16 +10,11 @@ const ProjectCreationPage = () => {
 
   const { projects } = useProject();
 
-  const handleCreateNewProject = () => {
+  const handleNewProjectCreate = () => {
     setIsNewProjectModalOpen(true);
   };
 
   const handleNewProjectCancel = () => {
-    setIsNewProjectModalOpen(false);
-  };
-
-  const handleNewProjectCreate = () => {
-    // TODO: create a new project
     setIsNewProjectModalOpen(false);
   };
 
@@ -49,43 +44,13 @@ const ProjectCreationPage = () => {
 
             <span>Create New Project</span>
           </button>
-          <CustomModal isOpen={isNewProjectModalOpen}>
-            <div className="text-xl font-bold">Create Project</div>
-            <div className="mt-2">
-              <label className="text-gray-400 block" htmlFor="projectName">
-                Enter Project Name:
-              </label>
-              <input
-                type="text"
-                placeholder="Type Here"
-                className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
-              />
-            </div>
-            <div className="flex justify-end gap-4 mt-4">
-              {/* Cancel Button */}
-              <button
-                onClick={handleNewProjectCancel}
-                className="px-6 py-2 bg-white text-red-500 border border-red-500 rounded-md hover:bg-red-50 transition"
-              >
-                Cancel
-              </button>
-
-              {/* Create Button */}
-              <button
-                onClick={handleNewProjectCreate}
-                className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition"
-              >
-                Create
-              </button>
-            </div>
-          </CustomModal>
         </div>
       ) : (
         <div>
           <div className="px-20 py-10  flex justify-between items-center">
             <h2 className="text-3xl font-bold text-purple-600">Projects</h2>
             <button
-              onClick={handleCreateNewProject}
+              onClick={handleNewProjectCreate}
               className="flex items-center gap-2 bg-black text-white mt-2 px-6 py-3 rounded-md hover:bg-gray-900 transition"
             >
               <div className="bg-white text-black rounded-full w-6 h-6 flex items-center justify-center">
@@ -100,6 +65,36 @@ const ProjectCreationPage = () => {
           </div>
         </div>
       )}
+      <CustomModal isOpen={isNewProjectModalOpen}>
+        <div className="text-xl font-bold">Create Project</div>
+        <div className="mt-2">
+          <label className="text-gray-400 block" htmlFor="projectName">
+            Enter Project Name:
+          </label>
+          <input
+            type="text"
+            placeholder="Type Here"
+            className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
+          />
+        </div>
+        <div className="flex justify-end gap-4 mt-4">
+          {/* Cancel Button */}
+          <button
+            onClick={handleNewProjectCancel}
+            className="px-6 py-2 bg-white text-red-500 border border-red-500 rounded-md hover:bg-red-50 transition"
+          >
+            Cancel
+          </button>
+
+          {/* Create Button */}
+          <button
+            onClick={handleNewProjectCreate}
+            className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition"
+          >
+            Create
+          </button>
+        </div>
+      </CustomModal>
     </>
   );
 };
