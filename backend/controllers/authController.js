@@ -29,7 +29,7 @@ export const login = asyncHandler(async (req, res) => {
     throw new Error("Invalid email or password");
   }
 
-  const token = signToken();
+  const token = signToken(user._id);
 
   res.cookie("jwt", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000,
