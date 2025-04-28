@@ -8,24 +8,45 @@ import AccountSettingsPage from "./pages/AccountSettingsPage";
 import CreateAndRepurposePage from "./pages/CreateAndRepurposePage";
 import UpgradePage from "./pages/UpgradePage";
 import PodcastWidgetPage from "./pages/PodcastWidgetPage";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
 
-      <Route element={<ProjectCreationLayout />}>
+      <Route
+        element={
+          <PrivateRoute>
+            <ProjectCreationLayout />
+          </PrivateRoute>
+        }
+      >
         <Route path="/" element={<ProjectCreationPage />} />
       </Route>
 
-      <Route path="projects" element={<UploadFlowLayout />}>
+      <Route
+        path="projects"
+        element={
+          <PrivateRoute>
+            <UploadFlowLayout />
+          </PrivateRoute>
+        }
+      >
         <Route path="" element={<AddPodcastPage />} />
         <Route path="create" element={<CreateAndRepurposePage />} />
         <Route path="widget" element={<PodcastWidgetPage />} />
         <Route path="upgrade" element={<UpgradePage />} />
       </Route>
 
-      <Route path="myaccount" element={<UploadFlowLayout />}>
+      <Route
+        path="myaccount"
+        element={
+          <PrivateRoute>
+            <UploadFlowLayout />
+          </PrivateRoute>
+        }
+      >
         <Route path="" element={<AccountSettingsPage />} />
       </Route>
     </Routes>
