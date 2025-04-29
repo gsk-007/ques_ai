@@ -87,9 +87,9 @@ const UploadFlowLayout = () => {
           >
             {/* Simple icon change */}
             {isCollapsed ? (
-              <FaArrowAltCircleRight size={20} />
+              <FaArrowAltCircleRight className="cursor-pointer" size={20} />
             ) : (
-              <FaArrowAltCircleLeft size={20} />
+              <FaArrowAltCircleLeft className="cursor-pointer" size={20} />
             )}
           </button>
         </div>
@@ -154,7 +154,7 @@ const UploadFlowLayout = () => {
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
               <IoIosLogOut
                 onClick={handleLogout}
-                className="text-red-800 text-xl"
+                className="text-red-800 text-xl cursor-pointer"
               />
             </div>
           </div>
