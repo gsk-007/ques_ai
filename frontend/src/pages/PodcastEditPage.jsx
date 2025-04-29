@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { api } from "../lib/api";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
 import { usePodcast } from "../contexts/PodcastContext";
+import { FaArrowLeft } from "react-icons/fa";
 
 const PodcastEditPage = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -12,6 +13,7 @@ const PodcastEditPage = () => {
   const [loading, setLoading] = useState(false);
 
   const { podcastId } = useParams();
+  const navigate = useNavigate();
   const { updatePodcast } = usePodcast();
 
   useEffect(() => {
@@ -50,7 +52,14 @@ const PodcastEditPage = () => {
     <div className="w-full mx-auto p-4">
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-4xl font-semibold">Edit Transcript</h2>
+        <div className="flex gap-4 items-center">
+          <FaArrowLeft
+            onClick={() => navigate(-1)}
+            className="cursor-pointer"
+            size={30}
+          />
+          <h2 className="text-4xl font-semibold">Edit Transcript</h2>
+        </div>
         {!isEditing ? (
           <button
             onClick={handleEdit}

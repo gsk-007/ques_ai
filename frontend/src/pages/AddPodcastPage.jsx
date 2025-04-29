@@ -6,8 +6,9 @@ import CustomModal from "../components/CustomModal";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { usePodcast } from "../contexts/PodcastContext";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import PodcastsList from "../components/PodcastsList";
+import { FaArrowLeft } from "react-icons/fa";
 
 const AddPodcastOptions = [
   {
@@ -39,6 +40,7 @@ const AddPodcastPage = () => {
   });
 
   const { projectId } = useParams();
+  const navigate = useNavigate();
 
   const { podcasts, createPodcast, getPodcasts } = usePodcast();
 
@@ -76,7 +78,14 @@ const AddPodcastPage = () => {
   return (
     <>
       <div>
-        <h2 className="text-4xl font-bold">Add Podcast</h2>
+        <div className="flex gap-4 items-center">
+          <FaArrowLeft
+            onClick={() => navigate(-1)}
+            className="cursor-pointer"
+            size={30}
+          />
+          <h2 className="text-4xl font-bold">Add Podcast</h2>
+        </div>
         <div className="flex gap-2 my-8 ">
           {AddPodcastOptions.map((item) => (
             <div

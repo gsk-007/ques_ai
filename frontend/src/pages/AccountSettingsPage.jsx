@@ -1,17 +1,28 @@
 import { FaRegUserCircle } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext";
 import { useState } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 const AccountSettingsPage = () => {
   const { user } = useAuth();
   const [name, setName] = useState(user.name);
+
+  const navigate = useNavigate();
 
   const handleSave = () => {};
 
   return (
     <div className="p-4">
       <div>
-        <h2 className="text-4xl font-bold">Account Settings</h2>
+        <div className="flex gap-4 items-center">
+          <FaArrowLeft
+            onClick={() => navigate(-1)}
+            className="cursor-pointer"
+            size={30}
+          />
+          <h2 className="text-4xl font-bold">Account Settings</h2>
+        </div>
       </div>
       <div className="flex justify-between items-center w-5/6 mt-16">
         <div className="rounded-full overflow-hidden border-4 border-purple-500 shadow-lg">
