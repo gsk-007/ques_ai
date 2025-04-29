@@ -40,6 +40,7 @@ const ProjectProvider = ({ children }) => {
       setLoading(true);
       await api.delete("/projects/" + id);
       setProjects((projects) => projects.filter((item) => item._id !== id));
+      toast.success("Project Updated Successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");

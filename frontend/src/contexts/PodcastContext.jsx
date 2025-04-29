@@ -50,6 +50,7 @@ const PodcastProvider = ({ children }) => {
         })
       );
       setLoading(false);
+      toast.success("File Updated Successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");
@@ -65,6 +66,7 @@ const PodcastProvider = ({ children }) => {
         podcasts.filter((podcast) => podcast._id !== podcastId)
       );
       setLoading(false);
+      toast.success("File Deleted Successfully!");
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");
