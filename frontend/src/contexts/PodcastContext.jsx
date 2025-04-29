@@ -44,7 +44,7 @@ const PodcastProvider = ({ children }) => {
       setPodcasts((podcasts) =>
         podcasts.map((podcast) => {
           if (podcast._id === podcastId) {
-            return res.podcast;
+            return res.data.podcast;
           }
           return podcast;
         })
