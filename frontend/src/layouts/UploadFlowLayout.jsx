@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/QuesLogo_purple.png";
 import { GoPlus, GoCopy } from "react-icons/go";
 import { RxPencil1 } from "react-icons/rx";
@@ -10,36 +10,45 @@ import {
 } from "react-icons/fa";
 import { IoSettingsOutline, IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { Outlet } from "react-router";
-
-const sidebarItems = [
-  {
-    title: "Add your Podcasts",
-    icon: <GoPlus size={30} />,
-    route: "",
-  },
-  {
-    title: "Create & Repurpose",
-    icon: <RxPencil1 size={30} />,
-    route: "",
-  },
-  {
-    title: "Podcast Widget",
-    icon: <GoCopy size={30} />,
-    route: "",
-  },
-  {
-    title: "Upgrade",
-    icon: <RiVipDiamondLine size={30} />,
-    route: "",
-  },
-];
+import { Link, Outlet, useNavigate, useParams } from "react-router";
+import { useAuth } from "../contexts/AuthContext";
 
 const UploadFlowLayout = () => {
+  const { projectId } = useParams();
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
+
+  const sidebarItems = [
+    {
+      title: "Add your Podcasts",
+      icon: <GoPlus size={30} />,
+      route: `/projects/${projectId}`,
+    },
+    {
+      title: "Create & Repurpose",
+      icon: <RxPencil1 size={30} />,
+      route: `/projects/${projectId}/create`,
+    },
+    {
+      title: "Podcast Widget",
+      icon: <GoCopy size={30} />,
+      route: `/projects/${projectId}/widget`,
+    },
+    {
+      title: "Upgrade",
+      icon: <RiVipDiamondLine size={30} />,
+      route: `/projects/${projectId}/upgrade`,
+    },
+  ];
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -52,9 +61,11 @@ const UploadFlowLayout = () => {
       >
         <div className="flex items-center justify-between p-4 ">
           {!isCollapsed && (
-            <h1 className="text-xl font-bold">
-              <img src={logo} alt="" />
-            </h1>
+            <Link to={"/"}>
+              <h1 className="text-xl font-bold">
+                <img src={logo} alt="" />
+              </h1>
+            </Link>
           )}
           <button
             onClick={toggleSidebar}
@@ -79,7 +90,9 @@ const UploadFlowLayout = () => {
                   className="p-4 flex gap-2 items-center hover:font-bold hover:text-purple-800 hover:bg-purple-200 transition"
                 >
                   <div>{item.icon}</div>
-                  <div>{item.title}</div>
+                  <Link to={item.route}>
+                    <div className="cursor-pointer">{item.title}</div>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -101,8 +114,10 @@ const UploadFlowLayout = () => {
                   <FaRegUserCircle size={50} />
                 </div>
                 <div className="px-4 flex flex-col">
-                  <div>Username</div>
-                  <div>email</div>
+                  <Link to={"/myaccount"}>
+                    <div className="cursor-pointer">{user.name}</div>
+                  </Link>
+                  <div>{user.email}</div>
                 </div>
               </div>
             </>
@@ -121,7 +136,10 @@ const UploadFlowLayout = () => {
               <IoNotificationsOutline className="text-gray-800 text-xl" />
             </div>
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <IoIosLogOut className="text-red-800 text-xl" />
+              <IoIosLogOut
+                onClick={handleLogout}
+                className="text-red-800 text-xl"
+              />
             </div>
           </div>
         </div>

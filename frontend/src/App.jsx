@@ -37,6 +37,7 @@ function App() {
         <Route path=":projectId" element={<AddPodcastPage />} />
         <Route path=":projectId/create" element={<CreateAndRepurposePage />} />
         <Route path=":projectId/widget" element={<PodcastWidgetPage />} />
+        <Route path=":projectId/upgrade" element={<UpgradePage />} />
       </Route>
 
       <Route
@@ -48,7 +49,6 @@ function App() {
         }
       >
         <Route path="myaccount" element={<AccountSettingsPage />} />
-        <Route path="upgrade" element={<UpgradePage />} />
         <Route path="podcast/:podcastId" element={<PodcastEditPage />} />
       </Route>
     </Routes>

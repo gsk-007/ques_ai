@@ -1,7 +1,13 @@
 import { FaRegUserCircle } from "react-icons/fa";
+import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
 
 const AccountSettingsPage = () => {
+  const { user } = useAuth();
+  const [name, setName] = useState(user.name);
+
   const handleSave = () => {};
+
   return (
     <div className="p-4">
       <div>
@@ -15,7 +21,12 @@ const AccountSettingsPage = () => {
           <label htmlFor="name" className="block">
             User name
           </label>
-          <input type="text" className="w-64 border border-black" />
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-64 border border-black"
+          />
         </div>
         <div>
           <label htmlFor="name" className="block">
@@ -23,17 +34,18 @@ const AccountSettingsPage = () => {
           </label>
           <input
             type="text"
+            value={user.email}
             className="w-64 border border-black cursor-not-allowed"
             disabled
           />
         </div>
         <div>
-          <button
+          {/* <button
             onClick={handleSave}
             className="px-6 py-2 border-2 bg-white border-green-500 text-green-500 rounded-4xl font-semibold transition-all duration-300 hover:bg-green-700 hover:text-white"
           >
             Save
-          </button>
+          </button> */}
         </div>
       </div>
 
