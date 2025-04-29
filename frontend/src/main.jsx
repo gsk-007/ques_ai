@@ -6,14 +6,17 @@ import { BrowserRouter } from "react-router";
 import ProjectProvider from "./contexts/ProjectContext";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "./contexts/AuthContext.jsx";
+import PodcastProvider from "./contexts/PodcastContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <ProjectProvider>
-          <App />
-          <Toaster />
+          <PodcastProvider>
+            <App />
+            <Toaster />
+          </PodcastProvider>
         </ProjectProvider>
       </AuthProvider>
     </BrowserRouter>

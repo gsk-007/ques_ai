@@ -9,6 +9,7 @@ import CreateAndRepurposePage from "./pages/CreateAndRepurposePage";
 import UpgradePage from "./pages/UpgradePage";
 import PodcastWidgetPage from "./pages/PodcastWidgetPage";
 import PrivateRoute from "./components/PrivateRoute";
+import PodcastEditPage from "./pages/PodcastEditPage";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
       >
         <Route path="myaccount" element={<AccountSettingsPage />} />
         <Route path="upgrade" element={<UpgradePage />} />
+        <Route path="podcast/:podcastId" element={<PodcastEditPage />} />
       </Route>
     </Routes>
   );

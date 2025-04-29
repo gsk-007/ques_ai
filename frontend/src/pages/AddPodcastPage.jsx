@@ -3,7 +3,11 @@ import { FaSquareYoutube } from "react-icons/fa6";
 import { RiFolderUploadFill } from "react-icons/ri";
 import { MdOutlineCloudUpload } from "react-icons/md";
 import CustomModal from "../components/CustomModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { usePodcast } from "../contexts/PodcastContext";
+import { useParams } from "react-router";
+import PodcastsList from "../components/PodcastsList";
 
 const AddPodcastOptions = [
   {
@@ -34,6 +38,14 @@ const AddPodcastPage = () => {
     transcript: "",
   });
 
+  const { projectId } = useParams();
+
+  const { podcasts, createPodcast, getPodcasts } = usePodcast();
+
+  useEffect(() => {
+    getPodcasts(projectId);
+  }, [projectId]);
+
   const handleOptionClick = (data) => {
     setIsUploadModalOpen(true);
     if (data.id == 1) {
@@ -49,7 +61,18 @@ const AddPodcastPage = () => {
     setIsUploadModalOpen(false);
   };
 
-  const handleUpload = () => {};
+  const handleUpload = () => {
+    if (!modalData.name || !modalData.transcript) {
+      toast.error("name and transcript are required");
+      return;
+    }
+    createPodcast(modalData.name, modalData.transcript, projectId);
+    setModalData({
+      name: "",
+      transcript: "",
+    });
+    setIsUploadModalOpen(false);
+  };
   return (
     <>
       <div>
@@ -73,24 +96,29 @@ const AddPodcastPage = () => {
             </div>
           ))}
         </div>
-
-        <div className="w-11/12 h-[40vh] mx-auto bg-white rounded-2xl shadow-md  flex flex-col items-center justify-center">
+        {podcasts.length == 0 ? (
+          <div className="w-11/12 h-[40vh] mx-auto bg-white rounded-2xl shadow-md  flex flex-col items-center justify-center">
+            <div>
+              <MdOutlineCloudUpload className="text-purple-600" size={100} />
+            </div>
+            <div className="text-center">
+              <p className="text-xl">
+                Select a file or drag and drop here (Podcast media or
+                Transcription Text)
+              </p>
+              <p className="text-gray-600">
+                MP4, MOV, MP3, WAV, PDF, DOCX or TXT file
+              </p>
+            </div>
+            <button className="mt-4 px-6 py-2 border-2 border-purple-600 text-purple-600 rounded-full font-semibold transition-all duration-300 hover:bg-purple-600 hover:text-white">
+              Select File
+            </button>
+          </div>
+        ) : (
           <div>
-            <MdOutlineCloudUpload className="text-purple-600" size={100} />
+            <PodcastsList podcasts={podcasts} />
           </div>
-          <div className="text-center">
-            <p className="text-xl">
-              Select a file or drag and drop here (Podcast media or
-              Transcription Text)
-            </p>
-            <p className="text-gray-600">
-              MP4, MOV, MP3, WAV, PDF, DOCX or TXT file
-            </p>
-          </div>
-          <button className="mt-4 px-6 py-2 border-2 border-purple-600 text-purple-600 rounded-full font-semibold transition-all duration-300 hover:bg-purple-600 hover:text-white">
-            Select File
-          </button>
-        </div>
+        )}
       </div>
 
       <CustomModal isOpen={isUploadModalOpen}>

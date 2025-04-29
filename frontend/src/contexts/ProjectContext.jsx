@@ -4,10 +4,8 @@ import toast from "react-hot-toast";
 
 const ProjectContext = createContext(undefined);
 
-const project = { id: "sdfs", name: "name", files: [] };
-
 const ProjectProvider = ({ children }) => {
-  const [projects, setProjects] = useState([project]);
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const createProject = async (name) => {
