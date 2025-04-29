@@ -1,4 +1,6 @@
 import { useState, createContext, useContext } from "react";
+import { api } from "../lib/api";
+import toast from "react-hot-toast";
 
 const ProjectContext = createContext(undefined);
 
@@ -6,9 +8,40 @@ const project = { id: "sdfs", name: "name", files: [] };
 
 const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([project]);
+  const [loading, setLoading] = useState(false);
+
+  const createProject = async (name) => {
+    try {
+      setLoading(true);
+      const res = await api.post("/projects", { name });
+      toast.success("New Project Created!");
+      setProjects([...projects, res.data.project]);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getProjects = async () => {
+    try {
+      setLoading(true);
+      const res = await api.get("/projects");
+      setProjects(res.data.projects);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <ProjectContext.Provider value={{ projects }}>
+    <ProjectContext.Provider
+      value={{ projects, loading, createProject, getProjects }}
+    >
       {children}
     </ProjectContext.Provider>
   );

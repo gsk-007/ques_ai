@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import mainImg from "../assets/project_creation.png";
 import { FiPlus } from "react-icons/fi";
 import CustomModal from "../components/CustomModal";
 import { useProject } from "../contexts/ProjectContext";
 import ProjectsList from "../components/ProjectsList";
+import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 
 const ProjectCreationPage = () => {
   const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
+  const [projectName, setProjectName] = useState("");
 
-  const { projects } = useProject();
+  const { projects, loading, createProject, getProjects } = useProject();
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  const handleNewProjectBtnClick = () => {
+    setIsNewProjectModalOpen(true);
+  };
 
   const handleNewProjectCreate = () => {
-    setIsNewProjectModalOpen(true);
+    if (!projectName) {
+      toast.error("Project Name is required");
+      return;
+    }
+    setIsNewProjectModalOpen(false);
+    createProject(projectName);
+    setProjectName("");
   };
 
   const handleNewProjectCancel = () => {
@@ -35,7 +52,7 @@ const ProjectCreationPage = () => {
             quidem deserunt sequi quibusdam quae!
           </div>
           <button
-            onClick={handleCreateNewProject}
+            onClick={handleNewProjectBtnClick}
             className="flex items-center gap-2 bg-black text-white mt-2 px-6 py-3 rounded-md hover:bg-gray-900 transition"
           >
             <div className="bg-white text-black rounded-full w-6 h-6 flex items-center justify-center">
@@ -50,7 +67,7 @@ const ProjectCreationPage = () => {
           <div className="px-20 py-10  flex justify-between items-center">
             <h2 className="text-3xl font-bold text-purple-600">Projects</h2>
             <button
-              onClick={handleNewProjectCreate}
+              onClick={handleNewProjectBtnClick}
               className="flex items-center gap-2 bg-black text-white mt-2 px-6 py-3 rounded-md hover:bg-gray-900 transition"
             >
               <div className="bg-white text-black rounded-full w-6 h-6 flex items-center justify-center">
@@ -60,6 +77,7 @@ const ProjectCreationPage = () => {
               <span>Create New Project</span>
             </button>
           </div>
+          {loading && <Loader />}
           <div className="mx-20 mt-10">
             <ProjectsList projects={projects} />
           </div>
@@ -74,6 +92,8 @@ const ProjectCreationPage = () => {
           <input
             type="text"
             placeholder="Type Here"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
             className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400"
           />
         </div>

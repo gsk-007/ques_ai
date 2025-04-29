@@ -33,21 +33,21 @@ function App() {
           </PrivateRoute>
         }
       >
-        <Route path="" element={<AddPodcastPage />} />
-        <Route path="create" element={<CreateAndRepurposePage />} />
-        <Route path="widget" element={<PodcastWidgetPage />} />
-        <Route path="upgrade" element={<UpgradePage />} />
+        <Route path=":projectId" element={<AddPodcastPage />} />
+        <Route path=":projectId/create" element={<CreateAndRepurposePage />} />
+        <Route path=":projectId/widget" element={<PodcastWidgetPage />} />
       </Route>
 
       <Route
-        path="myaccount"
+        path=""
         element={
           <PrivateRoute>
             <UploadFlowLayout />
           </PrivateRoute>
         }
       >
-        <Route path="" element={<AccountSettingsPage />} />
+        <Route path="myaccount" element={<AccountSettingsPage />} />
+        <Route path="upgrade" element={<UpgradePage />} />
       </Route>
     </Routes>
   );
