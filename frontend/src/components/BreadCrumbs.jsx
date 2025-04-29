@@ -1,4 +1,4 @@
-import { Link, useLocation, useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { HiSlash } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import { useProject } from "../contexts/ProjectContext";
@@ -31,13 +31,13 @@ const Breadcrumbs = ({ className = "" }) => {
       const project = projects.find(
         (project) => project._id === params.projectId
       );
-      setProjectName(project.name);
+      setProjectName(project?.name || "");
     }
     if (params.podcastId && params.podcastId !== "undefined") {
       const podcast = podcasts.find(
         (podcast) => podcast._id === params.podcastId
       );
-      setPodcastTitle(podcast.name);
+      setPodcastTitle(podcast?.name || "");
     }
   }, [params.projectId, params.podcastId]);
 
@@ -53,11 +53,7 @@ const Breadcrumbs = ({ className = "" }) => {
       aria-label="Breadcrumb"
     >
       <ol className="flex flex-wrap items-center space-x-2">
-        <li>
-          <Link to="/" className="text-2xl text-gray-800  hover:underline">
-            Home
-          </Link>
-        </li>
+        <li className="text-2xl text-gray-800  hover:underline">Home</li>
 
         {pathnames.map((segment, index) => {
           const fullPath = "/" + pathnames.slice(0, index + 1).join("/");
@@ -73,12 +69,9 @@ const Breadcrumbs = ({ className = "" }) => {
                   {label}
                 </span>
               ) : (
-                <Link
-                  to={fullPath}
-                  className="text-2xl text-gray-800 hover:underline"
-                >
+                <span className="text-2xl text-gray-800 hover:underline">
                   {label}
-                </Link>
+                </span>
               )}
             </li>
           );

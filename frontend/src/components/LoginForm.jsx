@@ -19,7 +19,7 @@ const LoginForm = () => {
     try {
       await login(email, password);
       navigate("/");
-      toast.success("Logic Successful");
+      toast.success("Login Successful!");
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message);
