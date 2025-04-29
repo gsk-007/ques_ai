@@ -10,11 +10,19 @@ import {
 } from "react-icons/fa";
 import { IoSettingsOutline, IoNotificationsOutline } from "react-icons/io5";
 import { IoIosLogOut } from "react-icons/io";
-import { Link, Outlet, useNavigate, useParams } from "react-router";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import Breadcrumbs from "../components/BreadCrumbs";
 
 const UploadFlowLayout = () => {
   const { projectId } = useParams();
+  const location = useLocation();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const navigate = useNavigate();
@@ -42,6 +50,12 @@ const UploadFlowLayout = () => {
       route: `/projects/${projectId}/upgrade`,
     },
   ];
+
+  useEffect(() => {
+    if (location.pathname.includes("projects") && projectId === "undefined") {
+      navigate("/");
+    }
+  }, [projectId]);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
@@ -130,7 +144,9 @@ const UploadFlowLayout = () => {
       <div className="flex flex-col flex-1">
         {/* Top Navbar */}
         <div className="h-16  flex items-center px-6 justify-between mr-10">
-          <div className="text-lg font-semibold">Top Navbar</div>
+          <div className="text-lg font-semibold">
+            <Breadcrumbs />
+          </div>
           <div className="flex gap-4">
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
               <IoNotificationsOutline className="text-gray-800 text-xl" />
