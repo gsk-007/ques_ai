@@ -1,5 +1,4 @@
 import express from "express";
-import { login, signup, logout } from "../controllers/authController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import {
   createProject,
