@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import { createProjectSchema } from "../schemas/projectSchema.js";
 import Project from "../models/projectModel.js";
+import Podcast from "../models/podcastModel.js";
 
 // @description Create New Project
 // @route POST /api/projects/
@@ -43,7 +44,7 @@ export const getProjectById = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
   const project = await Project.findById(projectId);
 
-  if (!project || project.userId !== req.user._id) {
+  if (!project || !project.userId.equals(req.user._id)) {
     res.status(400);
     throw new Error("Invalid Project Id");
   }
@@ -68,12 +69,12 @@ export const deleteProjectById = asyncHandler(async (req, res) => {
   const { projectId } = req.params;
   const project = await Project.findById(projectId);
 
-  if (!project || project.userId !== req.user._id) {
+  if (!project || !project.userId.equals(req.user._id)) {
     res.status(400);
     throw new Error("Invalid Project Id");
   }
-
-  await project.remove();
+  await Podcast.deleteMany({ projectId: project._id });
+  await Project.findByIdAndDelete(project._id);
 
   res.status(204).json({
     success: true,
