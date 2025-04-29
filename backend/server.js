@@ -1,8 +1,11 @@
 import express from "express";
 import cors from "cors";
-import { authRoutes } from "./routes/authRoutes.js";
-import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import cookieParser from "cookie-parser";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+
+// Routes
+import { authRoutes } from "./routes/authRoutes.js";
+import { projectRoutes } from "./routes/projectRoutes.js";
 
 const app = express();
 
@@ -14,7 +17,7 @@ app.use(
   cors({
     origin: "http://localhost:5173",
     credentials: true,
-  }),
+  })
 );
 
 app.get("/health-check", (req, res) => {
@@ -22,6 +25,7 @@ app.get("/health-check", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
