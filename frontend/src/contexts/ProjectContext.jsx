@@ -27,7 +27,19 @@ const ProjectProvider = ({ children }) => {
       setLoading(true);
       const res = await api.get("/projects");
       setProjects(res.data.projects);
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    } finally {
       setLoading(false);
+    }
+  };
+
+  const deleteProject = async (id) => {
+    try {
+      setLoading(true);
+      await api.delete("/projects/" + id);
+      setProjects((projects) => projects.filter((item) => item._id !== id));
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong!");
@@ -38,7 +50,7 @@ const ProjectProvider = ({ children }) => {
 
   return (
     <ProjectContext.Provider
-      value={{ projects, loading, createProject, getProjects }}
+      value={{ projects, loading, createProject, getProjects, deleteProject }}
     >
       {children}
     </ProjectContext.Provider>
