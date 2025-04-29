@@ -1,7 +1,8 @@
 import React from "react";
+import ComingSoon from "../components/ComingSoon";
 
 const PodcastWidgetPage = () => {
-  return <div>PodcastWidgetPage</div>;
+  return <ComingSoon />;
 };
 
 export default PodcastWidgetPage;

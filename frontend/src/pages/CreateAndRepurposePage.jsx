@@ -1,7 +1,8 @@
 import React from "react";
+import ComingSoon from "../components/ComingSoon";
 
 const CreateAndRepurposePage = () => {
-  return <div>CreateAndRepurposePage</div>;
+  return <ComingSoon />;
 };
 
 export default CreateAndRepurposePage;
