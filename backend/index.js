@@ -13,6 +13,10 @@ const start = () => {
     throw new Error("JWT_SECRET not present");
   }
 
+  if (!process.env.CLIENT_URL) {
+    throw new Error("CLIENT_URL not present");
+  }
+
   connectDB();
 
   app.listen(PORT, () => {
