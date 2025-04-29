@@ -10,6 +10,7 @@ import { projectRoutes } from "./routes/projectRoutes.js";
 import { podcastRoutes } from "./routes/podcastRoutes.js";
 
 const app = express();
+const __dirname = path.resolve();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
